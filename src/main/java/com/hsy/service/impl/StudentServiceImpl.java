@@ -62,28 +62,20 @@ public class StudentServiceImpl implements StudentService {
     //根据id查询学生
     @Override
     public Student findStudentById(String id) {
-       try{
            Student student = studentDao.findStudentById(id);
+           if (student==null){
+               return null;
+           }
            School school = schoolDao.findSchoolBy(student.getId());
            student.setSchool(school);
            return student;
-       }catch (Exception e){
-           e.printStackTrace();
-           throw new MyException(ResultCode.ERROR,"您的操作有误");
-       }
     }
 
     //查询大于age的学生
     @Override
     public List<Student> findStudentByAge(Integer age) {
-        try{
-            List<Student> studentList = studentDao.findAllByAgeGreaterThan(age);
-            return studentList;
-        }catch (Exception e){
-            e.printStackTrace();
-            throw new MyException(ResultCode.ERROR,"您的操作有误");
-        }
-
+        List<Student> studentList = studentDao.findAllByAgeGreaterThan(age);
+        return studentList;
     }
 
     //查询所有学生

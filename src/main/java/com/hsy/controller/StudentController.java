@@ -1,11 +1,9 @@
 package com.hsy.controller;
 
-import com.hsy.base.MyException;
 import com.hsy.base.result;
 import com.hsy.domain.Student;
 import com.hsy.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +13,7 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
-    @Autowired
-    private RedisTemplate redisTemplate;
+
 
     /**
      * 添加学生
@@ -37,6 +34,9 @@ public class StudentController {
     @GetMapping("/findStudentById/{id}")
     public result findStudentById(@PathVariable String id){
         Student studentById = studentService.findStudentById(id);
+        if (studentById==null){
+            return result.error().data("msg","您的输入有误");
+        }
         return result.ok().data("student",studentById);
     }
 
@@ -47,6 +47,9 @@ public class StudentController {
     @GetMapping("/findAll")
     public result findAll(){
         List<Student> studentList = studentService.findAll();
+        if (studentList.size()==0){
+            return result.error().data("msg","查询失败");
+        }
         return result.ok().data("studentList",studentList);
     }
 
@@ -58,6 +61,9 @@ public class StudentController {
     @GetMapping("/findStudentByAge/{age}")
     public result findStudentByAge(@PathVariable Integer age){
         List<Student> studentList = studentService.findStudentByAge(age);
+        if (studentList.size()==0){
+            return result.error().data("msg","您查询的条件不在范围内");
+        }
         return result.ok().data("studentList",studentList);
     }
 
