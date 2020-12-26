@@ -51,6 +51,7 @@ public class StudentServiceImpl implements StudentService {
             //更新school
             school.setName(student.getSchool().getName());
             school.setAddress(student.getSchool().getAddress());
+            school.setId(id);
             //将更新后的school保存到student中
             student1.setSchool(school);
             //进行更新

@@ -55,18 +55,18 @@ class DemoApplicationTests {
     @Test
     void test3() {
         Student student = new Student();
-        student.setName("白龙马");
+        student.setName("李思");
         student.setAge(32);
-        student.setAddress("龙王");
+        student.setAddress("天津");
         List<String> hobby = new ArrayList<>();
         hobby.add("跳舞");
         hobby.add("唱歌");
         student.setHobby(hobby);
         School school = new School();
-        school.setName("重庆大学");
-        school.setAddress("重庆");
+        school.setName("天津大学");
+        school.setAddress("天津");
         student.setSchool(school);
-       studentService.updateStudent("003",student);
+       studentService.updateStudent("7",student);
     }
 
     /**
