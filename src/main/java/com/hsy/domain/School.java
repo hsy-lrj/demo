@@ -10,6 +10,6 @@ public class School {
 
    private String name;
    private String address;
-   private String stu_id;
+   private String id;
 
 }

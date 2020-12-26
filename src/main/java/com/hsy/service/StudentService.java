@@ -18,5 +18,9 @@ public interface StudentService {
     //查询大于age的学生
     List<Student> findStudentByAge(Integer age);
 
+    //查询所有学生
     List<Student> findAll();
+
+    //查询首页数据
+    List<Student> findHomePage();
 }

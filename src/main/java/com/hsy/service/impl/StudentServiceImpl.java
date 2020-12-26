@@ -8,7 +8,10 @@ import com.hsy.domain.School;
 import com.hsy.domain.Student;
 import com.hsy.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,19 +27,19 @@ public class StudentServiceImpl implements StudentService {
     //添加学生
     @Override
     public void saveStudent(Student student) {
-        try{
+        try {
             studentDao.save(student);
             schoolDao.save(student.getSchool());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new MyException(ResultCode.ERROR,"添加失败");
+            throw new MyException(ResultCode.ERROR, "添加失败");
         }
     }
 
     //更新学生
     @Override
     public int updateStudent(String id, Student student) {
-        try{
+        try {
             //查询到的数据
             Student student1 = studentDao.findStudentById(id);
             School school = student.getSchool();
@@ -53,22 +56,22 @@ public class StudentServiceImpl implements StudentService {
             //进行更新
             studentDao.save(student1);
             return 1;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new MyException(ResultCode.ERROR,"更新失败");
+            throw new MyException(ResultCode.ERROR, "更新失败");
         }
     }
 
     //根据id查询学生
     @Override
     public Student findStudentById(String id) {
-           Student student = studentDao.findStudentById(id);
-           if (student==null){
-               return null;
-           }
-           School school = schoolDao.findSchoolBy(student.getId());
-           student.setSchool(school);
-           return student;
+        Student student = studentDao.findStudentById(id);
+        if (student == null) {
+            return null;
+        }
+        School school = schoolDao.findSchoolById(student.getId());
+        student.setSchool(school);
+        return student;
     }
 
     //查询大于age的学生
@@ -82,6 +85,20 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> findAll() {
         List<Student> studentList = studentDao.findAll();
+        return studentList;
+    }
+
+    //查询首页数据
+    @Cacheable(value = "student", key = "'studentList'")
+    @Override
+    public List<Student> findHomePage() {
+        List<Student> studentList = new ArrayList<>();
+        Student student1 = this.findStudentById("1");
+        Student student2 = this.findStudentById("2");
+        Student student3 = this.findStudentById("3");
+        studentList.add(student1);
+        studentList.add(student2);
+        studentList.add(student3);
         return studentList;
     }
 

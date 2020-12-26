@@ -23,18 +23,19 @@ class DemoApplicationTests {
     @Test
     void test1() {
         Student student = new Student();
-        student.setId("003");
-        student.setName("沙和尚");
-        student.setAge(56);
-        student.setAddress("流沙河");
+        student.setId("6");
+        student.setName("杨幂");
+        student.setAge(34);
+        student.setAddress("北京市");
         List<String> hobby = new ArrayList<>();
-        hobby.add("吃人");
-        hobby.add("西天取经");
+        hobby.add("拍电影");
+        hobby.add("唱歌");
+        hobby.add("跳舞");
         student.setHobby(hobby);
         School school = new School();
-        school.setStu_id(student.getId());
-        school.setName("上海大学");
-        school.setAddress("上海");
+        school.setId(student.getId());
+        school.setName("北京电影学院");
+        school.setAddress("北京市海淀区西土城路4号");
         student.setSchool(school);
         studentService.saveStudent(student);
     }

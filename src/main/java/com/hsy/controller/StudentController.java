@@ -80,7 +80,19 @@ public class StudentController {
         }else {
             return result.error().data("msg","修改失败");
         }
+    }
 
+    /**
+     * 查询所有学生
+     * @return
+     */
+    @GetMapping("/findHomePage")
+    public result findHomePage(){
+        List<Student> studentList = studentService.findHomePage();
+        if (studentList.size()==0){
+            return result.error().data("msg","查询失败");
+        }
+        return result.ok().data("studentList",studentList);
     }
 
 
